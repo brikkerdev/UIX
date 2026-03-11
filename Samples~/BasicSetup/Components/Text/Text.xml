@@ -1,0 +1,9 @@
+<component name="Text">
+    <props>
+        <prop name="text" type="string" default="" />
+        <prop name="variant" type="enum(h1,h2,body,caption)" default="body" />
+    </props>
+    <template>
+        <text class="text text-{variant}" text="{text}" />
+    </template>
+</component>

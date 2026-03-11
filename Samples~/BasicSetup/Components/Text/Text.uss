@@ -1,0 +1,19 @@
+.text {
+    color: var(--color-text);
+}
+
+.text-h1 {
+    font-size: 32;
+}
+
+.text-h2 {
+    font-size: 24;
+}
+
+.text-body {
+    font-size: var(--font-size-md);
+}
+
+.text-caption {
+    font-size: 12;
+}

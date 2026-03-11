@@ -1,0 +1,23 @@
+{
+    "name": "UIX.Editor",
+    "rootNamespace": "UIX",
+    "references": [
+        "UIX.Runtime",
+        "Unity.TextMeshPro",
+        "UnityEngine.UI",
+        "UnityEngine",
+        "UnityEditor",
+        "com.uacf.editor"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

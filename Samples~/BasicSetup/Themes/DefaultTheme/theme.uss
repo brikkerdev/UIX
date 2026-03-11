@@ -1,0 +1,7 @@
+:root {
+    --color-primary: #3A7BF2;
+    --color-background: #FFFFFF;
+    --color-text: #333333;
+    --spacing-md: 16;
+    --font-size-md: 16;
+}

@@ -1,0 +1,17 @@
+.btn {
+    padding: var(--spacing-md);
+    background-color: var(--color-primary);
+    min-height: 36;
+}
+
+.btn-primary {
+    background-color: var(--color-primary);
+}
+
+.btn-secondary {
+    background-color: #6C757D;
+}
+
+.btn-danger {
+    background-color: #DC3545;
+}

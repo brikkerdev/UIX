@@ -1,0 +1,14 @@
+.card {
+    padding: var(--spacing-md);
+    background-color: var(--color-background);
+    border-radius: 8;
+}
+
+.card-title {
+    font-size: 18;
+    font-weight: bold;
+}
+
+.card-body {
+    padding-top: 8;
+}

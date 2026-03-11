@@ -1,0 +1,13 @@
+.screen {
+    padding: 24;
+    background-color: var(--color-background);
+}
+
+.title {
+    font-size: 28;
+    margin-bottom: 16;
+}
+
+.actions {
+    gap: 8;
+}

@@ -1,0 +1,12 @@
+<component name="Button">
+    <props>
+        <prop name="text" type="string" default="" />
+        <prop name="variant" type="enum(primary,secondary,danger)" default="primary" />
+        <prop name="onClick" type="event" />
+    </props>
+    <template>
+        <button class="btn btn-{variant}" onClick="{onClick}">
+            <text text="{text}" />
+        </button>
+    </template>
+</component>

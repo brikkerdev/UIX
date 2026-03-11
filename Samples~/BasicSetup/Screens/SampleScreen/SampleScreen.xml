@@ -1,0 +1,12 @@
+<screen name="SampleScreen" viewmodel="SampleScreenViewModel">
+    <template>
+        <column class="screen">
+            <text class="title" text="Sample Screen" />
+            <row class="actions">
+                <button class="btn" onClick="{OnButtonClicked}">
+                    <text text="Click Me" />
+                </button>
+            </row>
+        </column>
+    </template>
+</screen>
