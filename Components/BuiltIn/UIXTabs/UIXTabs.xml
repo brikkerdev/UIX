@@ -1,0 +1,17 @@
+<component name="UIXTabs">
+    <props>
+        <prop name="tabs" type="list" />
+        <prop name="selected" type="int" default="0" />
+        <prop name="onTabChanged" type="event" />
+    </props>
+    <template>
+        <column class="uix-tabs">
+            <row class="uix-tabs-header">
+                <slot name="tabs" />
+            </row>
+            <column class="uix-tabs-content">
+                <slot />
+            </column>
+        </column>
+    </template>
+</component>

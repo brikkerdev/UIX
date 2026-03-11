@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcec11ccad78e00488c26d196427dd3a, type: 3}
+  m_Name: UIXDivider_StyleSheet
+  m_EditorClassIdentifier: UIX.Runtime::UIX.Templates.UIXStyleSheet
+  SourcePath: Packages/com.uix.framework/Components/BuiltIn/UIXDivider/UIXDivider.uss
+  SourceUSS: ".uix-divider {\n    height: 1;\n    min-height: 1;\n    background-color:
+    var(--color-text-muted, #666);\n    opacity: 0.3;\n}\n"
+  Rules:
+  - SelectorJson: 
+    Properties:
+    - Name: height
+      Value: 1
+    - Name: min-height
+      Value: 1
+    - Name: background-color
+      Value: var(--color-text-muted, #666)
+    - Name: opacity
+      Value: 0.3
+    LineNumber: 1
+  Variables: []

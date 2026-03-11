@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcec11ccad78e00488c26d196427dd3a, type: 3}
+  m_Name: UIXProgressBar_StyleSheet
+  m_EditorClassIdentifier: UIX.Runtime::UIX.Templates.UIXStyleSheet
+  SourcePath: Packages/com.uix.framework/Components/BuiltIn/UIXProgressBar/UIXProgressBar.uss
+  SourceUSS: '.uix-progress { height: 8; }
+
+    .uix-progress-track { background-color:
+    #E0E0E0; border-radius: var(--radius-full, 9999); overflow: hidden; }
+
+    .uix-progress-fill
+    { background-color: var(--color-primary); min-width: 0; }
+
+    .uix-progress-success
+    .uix-progress-fill { background-color: #28A745; }
+
+'
+  Rules:
+  - SelectorJson: 
+    Properties:
+    - Name: height
+      Value: 8
+    LineNumber: 1
+  - SelectorJson: 
+    Properties:
+    - Name: background-color
+      Value: var(--color-primary)
+    - Name: min-width
+      Value: 0
+    LineNumber: 3
+  Variables: []

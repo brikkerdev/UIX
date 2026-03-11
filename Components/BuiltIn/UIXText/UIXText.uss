@@ -1,0 +1,9 @@
+.uix-text { color: var(--color-text); }
+.uix-text-h1 { font-size: var(--font-size-xxl, 36); font-weight: bold; }
+.uix-text-h2 { font-size: var(--font-size-xl, 28); font-weight: bold; }
+.uix-text-h3 { font-size: var(--font-size-lg, 20); font-weight: bold; }
+.uix-text-h4 { font-size: var(--font-size-md, 16); font-weight: bold; }
+.uix-text-h5 { font-size: var(--font-size-sm, 14); font-weight: bold; }
+.uix-text-h6 { font-size: var(--font-size-xs, 12); font-weight: bold; }
+.uix-text-body { font-size: var(--font-size-md, 16); }
+.uix-text-caption { font-size: var(--font-size-sm, 14); color: var(--color-text-muted, #666); }

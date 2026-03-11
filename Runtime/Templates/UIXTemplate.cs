@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UIX.Parsing.Nodes;
@@ -17,6 +18,23 @@ namespace UIX.Templates
         [HideInInspector] public List<SerializedPropDef> Props = new List<SerializedPropDef>();
         [HideInInspector] public List<SerializedSlotDef> Slots = new List<SerializedSlotDef>();
         [HideInInspector] public string RootNodeJson;
+        [HideInInspector] public List<BindingInfo> Bindings = new List<BindingInfo>();
+
+        [Serializable]
+        public class BindingInfo
+        {
+            public string ElementId;
+            public string AttributeName;
+            public string Expression;
+            public BindingType Type;
+        }
+
+        public enum BindingType
+        {
+            OneWay,
+            TwoWay,
+            Event
+        }
 
         [System.Serializable]
         public class SerializedPropDef

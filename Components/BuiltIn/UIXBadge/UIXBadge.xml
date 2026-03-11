@@ -1,0 +1,11 @@
+<component name="UIXBadge">
+    <props>
+        <prop name="text" type="string" default="" />
+        <prop name="variant" type="enum(default,success,warning,error)" default="default" />
+    </props>
+    <template>
+        <container class="uix-badge uix-badge-{variant}">
+            <text text="{text}" class="uix-badge-text" />
+        </container>
+    </template>
+</component>

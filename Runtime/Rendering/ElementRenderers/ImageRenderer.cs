@@ -34,8 +34,8 @@ namespace UIX.Rendering.ElementRenderers
 
             if (context?.ResolvedStyles != null)
             {
-                StyleApplicator.ApplyToImage(image, context.ResolvedStyles);
                 LayoutMapper.ApplyToRectTransform(rect, context.ResolvedStyles);
+                StyleApplicator.ApplyToElement(go, context.ResolvedStyles);
             }
 
             return go;

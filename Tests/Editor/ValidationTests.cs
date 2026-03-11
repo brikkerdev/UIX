@@ -8,7 +8,7 @@ namespace UIX.Tests.Editor
         [Test]
         public void ValidateXml_ValidScreen_ReturnsValid()
         {
-            var xml = @"<screen name=""Test"" viewmodel=""TestVM"">
+            var xml = @"<screen name=""Test"">
   <template><column><text text=""Hello"" /></column></template>
 </screen>";
             var result = UIXValidation.ValidateXml("Assets/UI/Screens/Test/Test.xml", xml);

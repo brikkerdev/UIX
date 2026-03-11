@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcec11ccad78e00488c26d196427dd3a, type: 3}
+  m_Name: UIXCard_StyleSheet
+  m_EditorClassIdentifier: UIX.Runtime::UIX.Templates.UIXStyleSheet
+  SourcePath: Packages/com.uix.framework/Components/BuiltIn/UIXCard/UIXCard.uss
+  SourceUSS: ".uix-card {\n    padding: var(--spacing-md);\n    background-color:
+    var(--color-surface, #F5F5F5);\n    border-radius: var(--radius-md, 8);\n}\n\n.uix-card-title
+    { font-size: var(--font-size-lg, 20); font-weight: bold; margin-bottom: var(--spacing-sm);
+    }\n.uix-card-body { gap: var(--spacing-sm); }\n"
+  Rules:
+  - SelectorJson: 
+    Properties:
+    - Name: padding
+      Value: var(--spacing-md)
+    - Name: background-color
+      Value: var(--color-surface, #F5F5F5)
+    - Name: border-radius
+      Value: var(--radius-md, 8)
+    LineNumber: 1
+  - SelectorJson: 
+    Properties:
+    - Name: font-size
+      Value: var(--font-size-lg, 20)
+    - Name: font-weight
+      Value: bold
+    - Name: margin-bottom
+      Value: var(--spacing-sm)
+    LineNumber: 7
+  Variables: []

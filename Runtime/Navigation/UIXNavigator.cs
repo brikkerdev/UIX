@@ -1,5 +1,9 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
+using UIX.Core;
+using UIX.Parsing;
+using UIX.Parsing.Nodes;
 
 namespace UIX.Navigation
 {
@@ -13,6 +17,7 @@ namespace UIX.Navigation
 
         private readonly ScreenStack _stack = new ScreenStack();
         private readonly ModalManager _modals = new ModalManager();
+        private readonly Dictionary<Type, (Binding.ViewModel vm, GameObject root)> _overlays = new Dictionary<Type, (Binding.ViewModel, GameObject)>();
 
         public Binding.ViewModel CurrentScreen => _stack.Current;
         public IReadOnlyList<Binding.ViewModel> ScreenStack => _stack.All;
@@ -25,25 +30,27 @@ namespace UIX.Navigation
 
         public void Push<T>() where T : Binding.ViewModel, new()
         {
-            var vm = new T();
-            _stack.Push(vm);
-            OnScreenPushed?.Invoke(vm);
+            Push<T>(null);
         }
 
         public void Push<T>(object props) where T : Binding.ViewModel, new()
         {
-            Push<T>();
+            var vm = new T();
+            if (vm is Binding.IViewModelWithProps withProps && props != null)
+                withProps.SetProps(props);
+            _stack.Push(vm);
+            OnScreenPushed?.Invoke(vm);
         }
 
         public void Replace<T>() where T : Binding.ViewModel, new()
         {
-            _stack.Pop();
-            Push<T>();
+            Replace<T>(null);
         }
 
         public void Replace<T>(object props) where T : Binding.ViewModel, new()
         {
-            Replace<T>();
+            _stack.Pop();
+            Push<T>(props);
         }
 
         public void Pop()
@@ -67,14 +74,16 @@ namespace UIX.Navigation
 
         public void ShowModal<T>() where T : Binding.ViewModel, new()
         {
-            var vm = new T();
-            _modals.Show(vm);
-            OnModalShown?.Invoke(vm);
+            ShowModal<T>(null);
         }
 
         public void ShowModal<T>(object props) where T : Binding.ViewModel, new()
         {
-            ShowModal<T>();
+            var vm = new T();
+            if (vm is Binding.IViewModelWithProps withProps && props != null)
+                withProps.SetProps(props);
+            _modals.Show(vm);
+            OnModalShown?.Invoke(vm);
         }
 
         public void CloseModal()
@@ -90,7 +99,67 @@ namespace UIX.Navigation
                 CloseModal();
         }
 
-        public void ShowOverlay<T>() where T : Binding.ViewModel, new() { }
-        public void HideOverlay<T>() where T : Binding.ViewModel { }
+        public void ShowOverlay<T>() where T : Binding.ViewModel, new()
+        {
+            ShowOverlay<T>(null);
+        }
+
+        public void ShowOverlay<T>(object props) where T : Binding.ViewModel, new()
+        {
+            if (_overlays.ContainsKey(typeof(T)))
+                HideOverlay<T>();
+
+            var vm = new T();
+            if (vm is Binding.IViewModelWithProps withProps && props != null)
+                withProps.SetProps(props);
+
+            GameObject root = null;
+            var container = UIXEngine.OverlayContainer;
+            var renderer = UIXEngine.Renderer;
+            if (container != null && renderer != null)
+            {
+                var rootNode = LoadScreenRoot<T>();
+                if (rootNode != null)
+                {
+                    var child = renderer.Render(rootNode, container, vm, null);
+                    if (child != null)
+                    {
+                        root = child;
+                        if (root.transform.parent != container)
+                            root.transform.SetParent(container, false);
+                    }
+                }
+            }
+            _overlays[typeof(T)] = (vm, root);
+        }
+
+        public void HideOverlay<T>() where T : Binding.ViewModel
+        {
+            if (_overlays.TryGetValue(typeof(T), out var entry))
+            {
+                if (entry.root != null)
+                    UnityEngine.Object.Destroy(entry.root);
+                _overlays.Remove(typeof(T));
+            }
+        }
+
+        private static RootNode LoadScreenRoot<T>()
+        {
+            var typeName = typeof(T).Name;
+            var screenName = typeName.EndsWith("ViewModel") ? typeName.Substring(0, typeName.Length - 9) : typeName;
+            var templates = Resources.LoadAll<UIX.Templates.UIXTemplate>("");
+            foreach (var template in templates)
+            {
+                if (template != null && !template.IsComponent && template.ViewModelType == typeName && !string.IsNullOrEmpty(template.SourcePath))
+                {
+                    var path = template.SourcePath.Replace("\\", "/");
+                    var resPath = path.Replace("Assets/Resources/", "").Replace(".xml", "");
+                    var xmlAsset = Resources.Load<TextAsset>(resPath);
+                    if (xmlAsset != null)
+                        return XMLParser.Parse(xmlAsset.text, template.SourcePath);
+                }
+            }
+            return null;
+        }
     }
 }

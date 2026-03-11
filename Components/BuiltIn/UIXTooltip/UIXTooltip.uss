@@ -1,0 +1,2 @@
+.uix-tooltip { position: relative; }
+.uix-tooltip-text { font-size: var(--font-size-xs, 12); padding: var(--spacing-xs); background-color: #333; color: #FFF; border-radius: var(--radius-sm, 4); }

@@ -1,0 +1,3 @@
+.uix-toggle { gap: var(--spacing-sm); align-items: center; }
+.uix-toggle-switch { width: 44; height: 24; }
+.uix-toggle-label { font-size: var(--font-size-md, 16); }

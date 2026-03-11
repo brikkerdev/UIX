@@ -18,5 +18,6 @@ namespace UIX.Rendering
         public object ViewModel { get; set; }
         public System.Func<string, object> EvaluateBinding { get; set; }
         public string ComponentScope { get; set; }
+        public Styling.StyleResolveContext StyleContext { get; set; }
     }
 }

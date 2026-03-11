@@ -1,0 +1,4 @@
+.uix-progress { height: 8; }
+.uix-progress-track { background-color: #E0E0E0; border-radius: var(--radius-full, 9999); overflow: hidden; }
+.uix-progress-fill { background-color: var(--color-primary); min-width: 0; }
+.uix-progress-success .uix-progress-fill { background-color: #28A745; }

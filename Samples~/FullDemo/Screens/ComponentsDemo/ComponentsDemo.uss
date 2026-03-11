@@ -1,0 +1,11 @@
+.components-demo {
+    padding: var(--spacing-lg);
+    background-color: var(--color-background);
+    gap: var(--spacing-md);
+}
+
+.components-demo-title {
+    font-size: var(--font-size-xl);
+    font-weight: bold;
+    color: var(--color-text);
+}

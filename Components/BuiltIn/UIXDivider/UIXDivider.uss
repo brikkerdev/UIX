@@ -1,0 +1,6 @@
+.uix-divider {
+    height: 1;
+    min-height: 1;
+    background-color: var(--color-text-muted, #666);
+    opacity: 0.3;
+}

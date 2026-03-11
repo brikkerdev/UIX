@@ -1,0 +1,19 @@
+<component name="UIXSlider">
+    <props>
+        <prop name="value" type="float" default="0" />
+        <prop name="min" type="float" default="0" />
+        <prop name="max" type="float" default="1" />
+        <prop name="label" type="string" default="" />
+        <prop name="showValue" type="bool" default="true" />
+        <prop name="onValueChanged" type="event" />
+    </props>
+    <template>
+        <column class="uix-slider">
+            <text class="uix-slider-label" text="{label}" />
+            <row class="uix-slider-row">
+                <slider value="{value}" min="{min}" max="{max}" onValueChanged="{onValueChanged}" class="uix-slider-control" />
+                <text text="{value}" class="uix-slider-value" />
+            </row>
+        </column>
+    </template>
+</component>

@@ -1,0 +1,11 @@
+<component name="DemoCard">
+    <props>
+        <prop name="title" type="string" default="" />
+        <prop name="description" type="string" default="" />
+    </props>
+    <template>
+        <UIXCard title="{title}">
+            <UIXText text="{description}" variant="body" />
+        </UIXCard>
+    </template>
+</component>

@@ -1,0 +1,6 @@
+.uix-modal-overlay { opacity: 0.5; background-color: #000000; }
+.uix-modal-content { padding: var(--spacing-lg); background-color: var(--color-surface, #FFF); border-radius: var(--radius-lg, 16); min-width: 300; }
+.uix-modal-header { gap: var(--spacing-md); align-items: center; }
+.uix-modal-title { font-size: var(--font-size-lg, 20); font-weight: bold; }
+.uix-modal-body { gap: var(--spacing-md); padding: var(--spacing-md) 0; }
+.uix-modal-footer { gap: var(--spacing-sm); justify-content: flex-end; }

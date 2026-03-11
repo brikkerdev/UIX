@@ -1,0 +1,13 @@
+<component name="UIXToggle">
+    <props>
+        <prop name="isOn" type="bool" default="false" />
+        <prop name="label" type="string" default="" />
+        <prop name="onToggled" type="event" />
+    </props>
+    <template>
+        <row class="uix-toggle">
+            <toggle isOn="{isOn}" onToggled="{onToggled}" class="uix-toggle-switch" />
+            <text text="{label}" class="uix-toggle-label" />
+        </row>
+    </template>
+</component>

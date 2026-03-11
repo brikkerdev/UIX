@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 220a89ebb6c88aa4ebda17c5c5915158, type: 3}
+  m_Name: UIXText_Template
+  m_EditorClassIdentifier: UIX.Runtime::UIX.Templates.UIXTemplate
+  SourcePath: Packages/com.uix.framework/Components/BuiltIn/UIXText/UIXText.xml
+  TemplateName: UIXText
+  IsComponent: 1
+  ViewModelType: 
+  Props:
+  - Name: text
+    Type: string
+    Default: 
+    Optional: 0
+  - Name: variant
+    Type: enum(h1,h2,h3,h4,h5,h6,body,caption)
+    Default: body
+    Optional: 0
+  Slots: []
+  RootNodeJson: 

@@ -1,0 +1,15 @@
+<screen name="ThemeDemo" viewmodel="UIX.Samples.FullDemo.ThemeDemoViewModel">
+    <template>
+        <column class="theme-demo">
+            <text class="theme-demo-title" text="Theme Demo" />
+            <UIXButton text="Toggle Theme" onClick="{OnToggleTheme}" variant="primary" />
+            <column class="theme-demo-preview">
+                <UIXCard title="Preview Card">
+                    <UIXText text="This card uses theme variables" variant="body" />
+                    <UIXButton text="Primary" variant="primary" onClick="{OnToggleTheme}" />
+                    <UIXButton text="Secondary" variant="secondary" onClick="{OnToggleTheme}" />
+                </UIXCard>
+            </column>
+        </column>
+    </template>
+</screen>

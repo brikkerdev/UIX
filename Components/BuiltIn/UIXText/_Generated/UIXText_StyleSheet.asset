@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcec11ccad78e00488c26d196427dd3a, type: 3}
+  m_Name: UIXText_StyleSheet
+  m_EditorClassIdentifier: UIX.Runtime::UIX.Templates.UIXStyleSheet
+  SourcePath: Packages/com.uix.framework/Components/BuiltIn/UIXText/UIXText.uss
+  SourceUSS: '.uix-text { color: var(--color-text); }
+
+    .uix-text-h1 { font-size:
+    var(--font-size-xxl, 36); font-weight: bold; }
+
+    .uix-text-h2 { font-size:
+    var(--font-size-xl, 28); font-weight: bold; }
+
+    .uix-text-h3 { font-size:
+    var(--font-size-lg, 20); font-weight: bold; }
+
+    .uix-text-h4 { font-size:
+    var(--font-size-md, 16); font-weight: bold; }
+
+    .uix-text-h5 { font-size:
+    var(--font-size-sm, 14); font-weight: bold; }
+
+    .uix-text-h6 { font-size:
+    var(--font-size-xs, 12); font-weight: bold; }
+
+    .uix-text-body { font-size:
+    var(--font-size-md, 16); }
+
+    .uix-text-caption { font-size: var(--font-size-sm,
+    14); color: var(--color-text-muted, #666); }
+
+'
+  Rules:
+  - SelectorJson: 
+    Properties:
+    - Name: color
+      Value: var(--color-text)
+    LineNumber: 1
+  - SelectorJson: 
+    Properties:
+    - Name: font-size
+      Value: var(--font-size-xl, 28)
+    - Name: font-weight
+      Value: bold
+    LineNumber: 3
+  - SelectorJson: 
+    Properties:
+    - Name: font-size
+      Value: var(--font-size-md, 16)
+    - Name: font-weight
+      Value: bold
+    LineNumber: 5
+  - SelectorJson: 
+    Properties:
+    - Name: font-size
+      Value: var(--font-size-xs, 12)
+    - Name: font-weight
+      Value: bold
+    LineNumber: 7
+  - SelectorJson: 
+    Properties:
+    - Name: font-size
+      Value: var(--font-size-sm, 14)
+    - Name: color
+      Value: var(--color-text-muted, #666)
+    LineNumber: 9
+  Variables: []

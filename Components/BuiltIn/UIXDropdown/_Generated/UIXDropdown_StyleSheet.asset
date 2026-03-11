@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcec11ccad78e00488c26d196427dd3a, type: 3}
+  m_Name: UIXDropdown_StyleSheet
+  m_EditorClassIdentifier: UIX.Runtime::UIX.Templates.UIXStyleSheet
+  SourcePath: Packages/com.uix.framework/Components/BuiltIn/UIXDropdown/UIXDropdown.uss
+  SourceUSS: '.uix-dropdown { gap: var(--spacing-xs); }
+
+    .uix-dropdown-label
+    { font-size: var(--font-size-sm, 14); }
+
+    .uix-dropdown-control { min-height:
+    36; }
+
+'
+  Rules:
+  - SelectorJson: 
+    Properties:
+    - Name: gap
+      Value: var(--spacing-xs)
+    LineNumber: 1
+  - SelectorJson: 
+    Properties:
+    - Name: min-height
+      Value: 36
+    LineNumber: 3
+  Variables: []

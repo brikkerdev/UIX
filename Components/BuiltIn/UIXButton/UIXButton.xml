@@ -1,0 +1,15 @@
+<component name="UIXButton">
+    <props>
+        <prop name="text" type="string" default="" />
+        <prop name="variant" type="enum(primary,secondary,danger,ghost)" default="primary" />
+        <prop name="size" type="enum(sm,md,lg)" default="md" />
+        <prop name="icon" type="sprite" optional="true" />
+        <prop name="onClick" type="event" />
+        <prop name="enabled" type="bool" default="true" />
+    </props>
+    <template>
+        <button class="uix-btn uix-btn-{variant} uix-btn-{size}" onClick="{onClick}" enabled="{enabled}">
+            <text text="{text}" class="uix-btn-text" />
+        </button>
+    </template>
+</component>

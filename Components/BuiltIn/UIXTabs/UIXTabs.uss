@@ -1,0 +1,3 @@
+.uix-tabs { gap: var(--spacing-md); }
+.uix-tabs-header { gap: var(--spacing-xs); }
+.uix-tabs-content { flex: 1; }

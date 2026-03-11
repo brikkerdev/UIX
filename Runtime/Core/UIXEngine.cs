@@ -26,6 +26,9 @@ namespace UIX.Core
         public static ComponentRegistry Registry => _registry;
         public static ComponentResolver ComponentResolver => _componentResolver;
         public static UIXRenderer Renderer => _renderer;
+        public static RectTransform OverlayContainer => _config?.OverlayContainer;
+        internal static StyleResolver StyleResolver => _styleResolver;
+        internal static VariableResolver VariableResolver => _variableResolver;
 
         public static void Initialize(UIXConfiguration config)
         {

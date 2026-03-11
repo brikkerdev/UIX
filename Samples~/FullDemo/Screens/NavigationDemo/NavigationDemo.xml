@@ -1,0 +1,10 @@
+<screen name="NavigationDemo" viewmodel="UIX.Samples.FullDemo.NavigationDemoViewModel">
+    <template>
+        <column class="nav-demo">
+            <text class="nav-demo-title" text="Navigation Demo" />
+            <UIXButton text="Theme Demo" onClick="{OnThemeDemoClicked}" />
+            <UIXButton text="Components Demo" onClick="{OnComponentsDemoClicked}" />
+            <UIXButton text="Back" variant="secondary" onClick="{OnBackClicked}" />
+        </column>
+    </template>
+</screen>

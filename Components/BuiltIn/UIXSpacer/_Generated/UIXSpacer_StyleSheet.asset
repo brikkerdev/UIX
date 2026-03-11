@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcec11ccad78e00488c26d196427dd3a, type: 3}
+  m_Name: UIXSpacer_StyleSheet
+  m_EditorClassIdentifier: UIX.Runtime::UIX.Templates.UIXStyleSheet
+  SourcePath: Packages/com.uix.framework/Components/BuiltIn/UIXSpacer/UIXSpacer.uss
+  SourceUSS: ".uix-spacer {\n    min-width: 0;\n    min-height: 0;\n    flex: 0;\n}\n"
+  Rules:
+  - SelectorJson: 
+    Properties:
+    - Name: min-width
+      Value: 0
+    - Name: min-height
+      Value: 0
+    - Name: flex
+      Value: 0
+    LineNumber: 1
+  Variables: []

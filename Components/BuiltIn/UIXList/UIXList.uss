@@ -1,0 +1,2 @@
+.uix-list { flex: 1; }
+.uix-list-content { gap: var(--spacing-sm); padding: var(--spacing-md); }

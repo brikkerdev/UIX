@@ -1,0 +1,11 @@
+<component name="UIXTooltip">
+    <props>
+        <prop name="text" type="string" default="" />
+    </props>
+    <template>
+        <column class="uix-tooltip">
+            <slot />
+            <text text="{text}" class="uix-tooltip-text" />
+        </column>
+    </template>
+</component>

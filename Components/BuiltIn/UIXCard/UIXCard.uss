@@ -1,0 +1,8 @@
+.uix-card {
+    padding: var(--spacing-md);
+    background-color: var(--color-surface, #F5F5F5);
+    border-radius: var(--radius-md, 8);
+}
+
+.uix-card-title { font-size: var(--font-size-lg, 20); font-weight: bold; margin-bottom: var(--spacing-sm); }
+.uix-card-body { gap: var(--spacing-sm); }

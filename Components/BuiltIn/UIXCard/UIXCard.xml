@@ -1,0 +1,13 @@
+<component name="UIXCard">
+    <props>
+        <prop name="title" type="string" default="" />
+    </props>
+    <template>
+        <column class="uix-card">
+            <text class="uix-card-title" text="{title}" />
+            <column class="uix-card-body">
+                <slot />
+            </column>
+        </column>
+    </template>
+</component>

@@ -1,0 +1,6 @@
+.uix-badge { padding: var(--spacing-xs) var(--spacing-sm); border-radius: var(--radius-full, 9999); }
+.uix-badge-default { background-color: #6C757D; }
+.uix-badge-success { background-color: #28A745; }
+.uix-badge-warning { background-color: #FFC107; color: #000; }
+.uix-badge-error { background-color: #DC3545; }
+.uix-badge-text { font-size: var(--font-size-xs, 12); color: #FFF; }

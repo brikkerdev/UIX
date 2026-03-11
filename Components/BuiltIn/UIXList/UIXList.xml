@@ -1,0 +1,13 @@
+<component name="UIXList">
+    <props>
+        <prop name="items" type="list" />
+        <prop name="itemHeight" type="float" default="80" />
+    </props>
+    <template>
+        <scroll direction="vertical" class="uix-list">
+            <column class="uix-list-content">
+                <slot />
+            </column>
+        </scroll>
+    </template>
+</component>

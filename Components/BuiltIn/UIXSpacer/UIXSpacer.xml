@@ -1,0 +1,9 @@
+<component name="UIXSpacer">
+    <props>
+        <prop name="width" type="float" default="0" />
+        <prop name="height" type="float" default="0" />
+    </props>
+    <template>
+        <container class="uix-spacer" />
+    </template>
+</component>

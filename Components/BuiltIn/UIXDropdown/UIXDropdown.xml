@@ -1,0 +1,14 @@
+<component name="UIXDropdown">
+    <props>
+        <prop name="options" type="list" />
+        <prop name="selected" type="int" default="0" />
+        <prop name="label" type="string" default="" />
+        <prop name="onSelected" type="event" />
+    </props>
+    <template>
+        <column class="uix-dropdown">
+            <text class="uix-dropdown-label" text="{label}" />
+            <dropdown options="{options}" selected="{selected}" onSelected="{onSelected}" class="uix-dropdown-control" />
+        </column>
+    </template>
+</component>

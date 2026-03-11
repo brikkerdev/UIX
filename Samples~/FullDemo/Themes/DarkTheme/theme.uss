@@ -1,0 +1,37 @@
+:root {
+    --color-primary: #BB86FC;
+    --color-primary-variant: #3700B3;
+    --color-secondary: #03DAC6;
+    --color-background: #121212;
+    --color-surface: #1E1E1E;
+    --color-error: #CF6679;
+    --color-on-primary: #000000;
+    --color-on-background: #FFFFFF;
+    --color-on-surface: #FFFFFF;
+    --color-text: #FFFFFF;
+    --color-text-muted: #8A8A8A;
+
+    --font-main: "Inter";
+    --font-size-xs: 12;
+    --font-size-sm: 14;
+    --font-size-md: 16;
+    --font-size-lg: 20;
+    --font-size-xl: 28;
+    --font-size-xxl: 36;
+
+    --spacing-xs: 4;
+    --spacing-sm: 8;
+    --spacing-md: 16;
+    --spacing-lg: 24;
+    --spacing-xl: 32;
+    --spacing-xxl: 48;
+
+    --radius-sm: 4;
+    --radius-md: 8;
+    --radius-lg: 16;
+    --radius-full: 9999;
+
+    --transition-fast: 0.15;
+    --transition-normal: 0.3;
+    --transition-slow: 0.5;
+}

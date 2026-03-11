@@ -4,6 +4,9 @@
   "version": "0.1.0",
   "unity": "2021.3",
   "description": "Declarative UI framework for Unity based on XML markup, CSS-like styling (USS), and component architecture. Integrates with UACF for AI-agent automation.",
+  "documentation": {
+    "path": "Documentation~"
+  },
   "keywords": [
     "UI",
     "UIX",
@@ -24,6 +27,11 @@
       "displayName": "Basic Setup",
       "description": "Button, Text, Card components and SampleScreen",
       "path": "Samples~/BasicSetup"
+    },
+    {
+      "displayName": "Full Demo",
+      "description": "LightTheme, DarkTheme, ThemeDemo, ComponentsDemo, NavigationDemo",
+      "path": "Samples~/FullDemo"
     }
   ]
 }

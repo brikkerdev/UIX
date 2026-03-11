@@ -57,22 +57,25 @@ namespace UIX.Rendering
 
         public GameObject Render(RootNode root, Transform parent, object viewModel = null, System.Func<string, object> evaluateBinding = null)
         {
-            return RenderNodes(root.Children, parent, root.Name, viewModel, evaluateBinding);
+            return RenderNodes(root.Children, parent, root.Name, viewModel, evaluateBinding, null);
         }
 
-        public GameObject RenderNodes(List<UIXNode> nodes, Transform parent, string scope = null, object viewModel = null, System.Func<string, object> evaluateBinding = null)
+        public GameObject RenderNodes(List<UIXNode> nodes, Transform parent, string scope = null, object viewModel = null, System.Func<string, object> evaluateBinding = null, UIXElementData parentElementData = null)
         {
+            if (parentElementData == null && parent != null)
+                parentElementData = parent.GetComponent<UIXElementData>();
             GameObject firstRoot = null;
-            foreach (var node in nodes)
+            for (var i = 0; i < nodes.Count; i++)
             {
-                var go = RenderNode(node, parent, scope, viewModel, evaluateBinding);
+                var node = nodes[i];
+                var go = RenderNode(node, parent, scope, viewModel, evaluateBinding, parentElementData, i, nodes.Count);
                 if (firstRoot == null && go != null)
                     firstRoot = go;
             }
             return firstRoot ?? parent?.gameObject;
         }
 
-        private GameObject RenderNode(UIXNode node, Transform parent, string scope, object viewModel, System.Func<string, object> evaluateBinding)
+        private GameObject RenderNode(UIXNode node, Transform parent, string scope, object viewModel, System.Func<string, object> evaluateBinding, UIXElementData parentElementData, int siblingIndex = 0, int siblingCount = 1)
         {
             var context = new RenderContext
             {
@@ -91,19 +94,44 @@ namespace UIX.Rendering
                 id = elem.Id ?? "";
                 if (!string.IsNullOrEmpty(elem.Class))
                     classes.AddRange(elem.Class.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries));
-                context.ResolvedStyles = _styleResolver.Resolve(elementType, id, classes);
+
+                var styleContext = new Styling.StyleResolveContext
+                {
+                    ParentElementType = parentElementData?.ElementType ?? "",
+                    ParentClasses = parentElementData?.Classes ?? new List<string>(),
+                    ParentId = parentElementData?.Id ?? "",
+                    IsDirectChild = true,
+                    SiblingIndex = siblingIndex,
+                    SiblingCount = siblingCount
+                };
+                context.StyleContext = styleContext;
+                context.ResolvedStyles = _styleResolver.Resolve(elementType, id, classes, null, styleContext);
 
                 if (_renderers.TryGetValue(elementType, out var renderer))
                 {
                     var go = renderer.Render(elem, parent, context);
                     if (go != null)
                     {
+                        if (!string.IsNullOrEmpty(id))
+                            go.name = id;
+                        var elementData = go.AddComponent<UIXElementData>();
+                        elementData.ElementType = elementType;
+                        elementData.Id = id;
+                        elementData.Classes = classes;
+                        elementData.SiblingIndex = siblingIndex;
+                        elementData.SiblingCount = siblingCount;
+                        elementData.ParentElementType = parentElementData?.ElementType ?? "";
+                        elementData.ParentClasses = parentElementData?.Classes ?? new List<string>();
+                        elementData.ParentId = parentElementData?.Id ?? "";
+                        elementData.IsDirectChild = true;
+                        if (IsInteractiveElement(elementType))
+                            go.AddComponent<Styling.CSSPseudoClassTracker>();
                         ApplyVisibleEnabled(go, elem, evaluateBinding);
                         if (elem.Children.Count > 0)
                         {
                             var childParent = elementType == "scroll" ? go.transform.Find("Viewport/Content") : go.transform;
                             if (childParent != null)
-                                RenderNodes(elem.Children, childParent, scope, viewModel, evaluateBinding);
+                                RenderNodes(elem.Children, childParent, scope, viewModel, evaluateBinding, elementData);
                         }
                     }
                     return go;
@@ -112,7 +140,7 @@ namespace UIX.Rendering
 
             if (node is ComponentNode comp)
             {
-                return RenderComponent(comp, parent, scope, viewModel, evaluateBinding);
+                return RenderComponent(comp, parent, scope, viewModel, evaluateBinding, parentElementData, siblingIndex, siblingCount);
             }
 
             if (node is SlotNode slot)
@@ -122,44 +150,52 @@ namespace UIX.Rendering
 
             if (node is SlotContentNode slotContent)
             {
-                RenderNodes(slotContent.Children, parent, scope, viewModel, evaluateBinding);
+                RenderNodes(slotContent.Children, parent, scope, viewModel, evaluateBinding, parentElementData);
                 return null;
             }
 
             if (node is ConditionalNode cond)
             {
                 if (evaluateBinding != null && evaluateBinding(cond.ConditionExpression) is bool b && b)
-                    RenderNodes(cond.Children, parent, scope, viewModel, evaluateBinding);
+                    RenderNodes(cond.Children, parent, scope, viewModel, evaluateBinding, parentElementData);
                 return null;
             }
 
             if (node is ForeachNode fe)
             {
-                return RenderForeach(fe, parent, scope, viewModel, evaluateBinding);
+                return RenderForeach(fe, parent, scope, viewModel, evaluateBinding, parentElementData);
             }
 
             return null;
         }
 
-        private GameObject RenderComponent(ComponentNode comp, Transform parent, string scope, object viewModel, System.Func<string, object> evaluateBinding)
+        private static bool IsInteractiveElement(string elementType)
+        {
+            return elementType == "button" || elementType == "toggle" || elementType == "slider" || elementType == "input" || elementType == "dropdown";
+        }
+
+        private GameObject RenderComponent(ComponentNode comp, Transform parent, string scope, object viewModel, System.Func<string, object> evaluateBinding, UIXElementData parentElementData, int siblingIndex = 0, int siblingCount = 1)
         {
             if (_componentResolver == null) return null;
 
             var go = _componentResolver.Instantiate(comp.ComponentName, parent);
             if (go == null) return null;
 
+            if (comp.Props.TryGetValue("id", out var compId) && !string.IsNullOrEmpty(compId) && !compId.Contains("{"))
+                go.name = compId;
+
             if (comp.DefaultSlotContent.Count > 0)
-                RenderNodes(comp.DefaultSlotContent, go.transform, scope ?? comp.ComponentName, viewModel, evaluateBinding);
+                RenderNodes(comp.DefaultSlotContent, go.transform, scope ?? comp.ComponentName, viewModel, evaluateBinding, null);
             foreach (var kv in comp.Slots)
             {
                 var slotMarker = go.transform.Find("Slot_" + kv.Key) ?? go.transform;
-                RenderNodes(kv.Value, slotMarker, scope ?? comp.ComponentName, viewModel, evaluateBinding);
+                RenderNodes(kv.Value, slotMarker, scope ?? comp.ComponentName, viewModel, evaluateBinding, null);
             }
 
             return go;
         }
 
-        private GameObject RenderForeach(ForeachNode fe, Transform parent, string scope, object viewModel, System.Func<string, object> evaluateBinding)
+        private GameObject RenderForeach(ForeachNode fe, Transform parent, string scope, object viewModel, System.Func<string, object> evaluateBinding, UIXElementData parentElementData)
         {
             if (evaluateBinding == null || string.IsNullOrEmpty(fe.ItemsExpression)) return null;
 
@@ -183,7 +219,7 @@ namespace UIX.Rendering
             {
                 var item = list[i];
                 var loopEvaluate = CreateLoopEvaluateBinding(varName, indexName, item, i, evaluateBinding);
-                var child = RenderNodes(fe.Children, parent, scope, viewModel, loopEvaluate);
+                var child = RenderNodes(fe.Children, parent, scope, viewModel, loopEvaluate, parentElementData);
                 if (firstChild == null && child != null)
                     firstChild = child;
             }

@@ -1,0 +1,13 @@
+<component name="UIXProgressBar">
+    <props>
+        <prop name="value" type="float" default="0" />
+        <prop name="variant" type="enum(default,success)" default="default" />
+    </props>
+    <template>
+        <column class="uix-progress uix-progress-{variant}">
+            <row class="uix-progress-track">
+                <container class="uix-progress-fill" />
+            </row>
+        </column>
+    </template>
+</component>

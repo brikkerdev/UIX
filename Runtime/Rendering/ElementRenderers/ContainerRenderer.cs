@@ -17,7 +17,10 @@ namespace UIX.Rendering.ElementRenderers
             rect.sizeDelta = Vector2.zero;
 
             if (context?.ResolvedStyles != null)
+            {
                 LayoutMapper.ApplyToRectTransform(rect, context.ResolvedStyles);
+                StyleApplicator.AddBackgroundIfNeeded(go, context.ResolvedStyles);
+            }
 
             return go;
         }

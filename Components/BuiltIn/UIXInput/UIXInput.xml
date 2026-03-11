@@ -1,0 +1,15 @@
+<component name="UIXInput">
+    <props>
+        <prop name="text" type="string" default="" />
+        <prop name="placeholder" type="string" default="" />
+        <prop name="label" type="string" default="" />
+        <prop name="onValueChanged" type="event" />
+        <prop name="onEndEdit" type="event" />
+    </props>
+    <template>
+        <column class="uix-input">
+            <text class="uix-input-label" text="{label}" />
+            <input text="{text}" placeholder="{placeholder}" onValueChanged="{onValueChanged}" onEndEdit="{onEndEdit}" class="uix-input-field" />
+        </column>
+    </template>
+</component>

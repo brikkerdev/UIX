@@ -1,0 +1,5 @@
+<component name="UIXDivider">
+    <template>
+        <container class="uix-divider" />
+    </template>
+</component>

@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcec11ccad78e00488c26d196427dd3a, type: 3}
+  m_Name: UIXBadge_StyleSheet
+  m_EditorClassIdentifier: UIX.Runtime::UIX.Templates.UIXStyleSheet
+  SourcePath: Packages/com.uix.framework/Components/BuiltIn/UIXBadge/UIXBadge.uss
+  SourceUSS: '.uix-badge { padding: var(--spacing-xs) var(--spacing-sm); border-radius:
+    var(--radius-full, 9999); }
+
+    .uix-badge-default { background-color: #6C757D;
+    }
+
+    .uix-badge-success { background-color: #28A745; }
+
+    .uix-badge-warning
+    { background-color: #FFC107; color: #000; }
+
+    .uix-badge-error { background-color:
+    #DC3545; }
+
+    .uix-badge-text { font-size: var(--font-size-xs, 12); color:
+    #FFF; }
+
+'
+  Rules:
+  - SelectorJson: 
+    Properties:
+    - Name: padding
+      Value: var(--spacing-xs) var(--spacing-sm)
+    - Name: border-radius
+      Value: var(--radius-full, 9999)
+    LineNumber: 1
+  - SelectorJson: 
+    Properties:
+    - Name: background-color
+      Value: '#28A745'
+    LineNumber: 3
+  - SelectorJson: 
+    Properties:
+    - Name: background-color
+      Value: '#DC3545'
+    LineNumber: 5
+  Variables: []

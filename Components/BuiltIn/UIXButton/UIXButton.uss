@@ -1,0 +1,18 @@
+.uix-btn {
+    padding: var(--spacing-md);
+    background-color: var(--color-primary);
+    min-height: 36;
+}
+
+.uix-btn-primary { background-color: var(--color-primary); }
+.uix-btn-secondary { background-color: #6C757D; }
+.uix-btn-danger { background-color: #DC3545; }
+.uix-btn-ghost { background-color: transparent; }
+
+.uix-btn-sm { min-height: 28; padding: var(--spacing-xs); }
+.uix-btn-md { min-height: 36; }
+.uix-btn-lg { min-height: 44; padding: var(--spacing-lg); }
+
+.uix-btn-content { gap: var(--spacing-sm); align-items: center; }
+.uix-btn-text { color: var(--color-on-primary, #FFFFFF); font-size: var(--font-size-md); }
+.uix-btn-icon { width: 20; height: 20; }

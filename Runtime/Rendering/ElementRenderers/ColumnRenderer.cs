@@ -28,6 +28,7 @@ namespace UIX.Rendering.ElementRenderers
             {
                 LayoutMapper.ApplyToLayoutGroup(vlg, context.ResolvedStyles);
                 LayoutMapper.ApplyToRectTransform(rect, context.ResolvedStyles);
+                StyleApplicator.AddBackgroundIfNeeded(go, context.ResolvedStyles);
             }
 
             return go;

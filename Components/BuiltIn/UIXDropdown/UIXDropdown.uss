@@ -1,0 +1,3 @@
+.uix-dropdown { gap: var(--spacing-xs); }
+.uix-dropdown-label { font-size: var(--font-size-sm, 14); }
+.uix-dropdown-control { min-height: 36; }

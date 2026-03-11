@@ -1,0 +1,15 @@
+<screen name="ComponentsDemo" viewmodel="UIX.Samples.FullDemo.ComponentsDemoViewModel">
+    <template>
+        <column class="components-demo">
+            <text class="components-demo-title" text="Components Demo" />
+            <UIXButton text="Primary Button" variant="primary" onClick="{OnButtonClicked}" />
+            <UIXButton text="Secondary" variant="secondary" onClick="{OnButtonClicked}" />
+            <UIXText text="Heading" variant="h3" />
+            <UIXText text="Body text" variant="body" />
+            <UIXCard title="Card Example">
+                <UIXText text="Card content" variant="body" />
+            </UIXCard>
+            <UIXDivider />
+        </column>
+    </template>
+</screen>

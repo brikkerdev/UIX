@@ -1,0 +1,9 @@
+<component name="UIXText">
+    <props>
+        <prop name="text" type="string" default="" />
+        <prop name="variant" type="enum(h1,h2,h3,h4,h5,h6,body,caption)" default="body" />
+    </props>
+    <template>
+        <text class="uix-text uix-text-{variant}" text="{text}" />
+    </template>
+</component>

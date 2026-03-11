@@ -1,0 +1,15 @@
+.theme-demo {
+    padding: var(--spacing-lg);
+    background-color: var(--color-background);
+    gap: var(--spacing-lg);
+}
+
+.theme-demo-title {
+    font-size: var(--font-size-xl);
+    font-weight: bold;
+    color: var(--color-text);
+}
+
+.theme-demo-preview {
+    gap: var(--spacing-md);
+}

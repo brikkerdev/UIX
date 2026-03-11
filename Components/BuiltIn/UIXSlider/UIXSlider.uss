@@ -1,0 +1,5 @@
+.uix-slider { gap: var(--spacing-xs); }
+.uix-slider-label { font-size: var(--font-size-sm, 14); }
+.uix-slider-row { gap: var(--spacing-sm); align-items: center; }
+.uix-slider-control { flex: 1; min-width: 100; }
+.uix-slider-value { min-width: 40; font-size: var(--font-size-sm, 14); }

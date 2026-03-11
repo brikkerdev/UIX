@@ -35,6 +35,7 @@ namespace UIX.Rendering.ElementRenderers
             {
                 LayoutMapper.ApplyToGridLayoutGroup(grid, context.ResolvedStyles);
                 LayoutMapper.ApplyToRectTransform(rect, context.ResolvedStyles);
+                StyleApplicator.AddBackgroundIfNeeded(go, context.ResolvedStyles);
             }
 
             return go;

@@ -1,8 +1,11 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
 using UIX.Parsing;
+using UIX.Parsing.Nodes;
 using UIX.Parsing.Tokens;
 using UIX.Templates;
 
@@ -85,6 +88,11 @@ namespace UIX.Editor.Pipeline
                 });
             }
 
+            if (!root.IsComponent && !string.IsNullOrEmpty(root.ViewModelType))
+            {
+                CollectBindings(root, template.Bindings);
+            }
+
             var assetPath = "Assets" + outputPath.Replace(Application.dataPath, "").Replace("\\", "/");
             if (!assetPath.StartsWith("Assets/"))
                 assetPath = path.Replace("\\", "/").Replace(Path.GetFileName(path), "_Generated/" + name + "_Template.asset");
@@ -93,6 +101,106 @@ namespace UIX.Editor.Pipeline
             AssetDatabase.SaveAssets();
 
             return template;
+        }
+
+        private static readonly Regex BindingRegex = new Regex(@"\{=?\s*([^}]*)\}", RegexOptions.Compiled);
+
+        private static void CollectBindings(RootNode root, List<UIXTemplate.BindingInfo> bindings)
+        {
+            CollectBindingsRecursive(root.Children, bindings);
+        }
+
+        private static void CollectBindingsRecursive(List<UIXNode> nodes, List<UIXTemplate.BindingInfo> bindings)
+        {
+            foreach (var node in nodes)
+            {
+                if (node is ElementNode en)
+                {
+                    var id = en.Id ?? en.GetAttribute("id");
+                    foreach (var kv in en.Attributes)
+                    {
+                        var val = kv.Value;
+                        if (string.IsNullOrEmpty(val) || !val.Contains("{")) continue;
+                        var m = BindingRegex.Match(val);
+                        if (!m.Success) continue;
+                        var expr = m.Groups[1].Value.Trim();
+                        var isTwoWay = val.TrimStart().StartsWith("{=");
+                        var type = kv.Key.ToLowerInvariant() switch
+                        {
+                            "onclick" => UIXTemplate.BindingType.Event,
+                            "onvaluechanged" => UIXTemplate.BindingType.Event,
+                            "ontoggled" => UIXTemplate.BindingType.Event,
+                            "onendedit" => UIXTemplate.BindingType.Event,
+                            "value" => isTwoWay ? UIXTemplate.BindingType.TwoWay : UIXTemplate.BindingType.OneWay,
+                            "ison" => isTwoWay ? UIXTemplate.BindingType.TwoWay : UIXTemplate.BindingType.OneWay,
+                            "text" when en.TagName == "input" => isTwoWay ? UIXTemplate.BindingType.TwoWay : UIXTemplate.BindingType.OneWay,
+                            _ => UIXTemplate.BindingType.OneWay
+                        };
+                        if (!string.IsNullOrEmpty(id))
+                        {
+                            bindings.Add(new UIXTemplate.BindingInfo
+                            {
+                                ElementId = id,
+                                AttributeName = kv.Key,
+                                Expression = expr,
+                                Type = type
+                            });
+                        }
+                    }
+                    CollectBindingsRecursive(en.Children, bindings);
+                }
+                else if (node is ComponentNode cn)
+                {
+                    var id = cn.Props.TryGetValue("id", out var idVal) ? idVal : null;
+                    foreach (var kv in cn.Props)
+                    {
+                        if (kv.Key.Equals("id", StringComparison.OrdinalIgnoreCase)) continue;
+                        var val = kv.Value;
+                        if (string.IsNullOrEmpty(val) || !val.Contains("{")) continue;
+                        var m = BindingRegex.Match(val);
+                        if (!m.Success) continue;
+                        var expr = m.Groups[1].Value.Trim();
+                        var isTwoWay = val.TrimStart().StartsWith("{=");
+                        var type = kv.Key.ToLowerInvariant() switch
+                        {
+                            "onclick" => UIXTemplate.BindingType.Event,
+                            "onvaluechanged" => UIXTemplate.BindingType.Event,
+                            "ontoggled" => UIXTemplate.BindingType.Event,
+                            "onendedit" => UIXTemplate.BindingType.Event,
+                            "value" => isTwoWay ? UIXTemplate.BindingType.TwoWay : UIXTemplate.BindingType.OneWay,
+                            "ison" => isTwoWay ? UIXTemplate.BindingType.TwoWay : UIXTemplate.BindingType.OneWay,
+                            "text" => isTwoWay ? UIXTemplate.BindingType.TwoWay : UIXTemplate.BindingType.OneWay,
+                            _ => UIXTemplate.BindingType.OneWay
+                        };
+                        if (!string.IsNullOrEmpty(id))
+                        {
+                            bindings.Add(new UIXTemplate.BindingInfo
+                            {
+                                ElementId = id,
+                                AttributeName = kv.Key,
+                                Expression = expr,
+                                Type = type
+                            });
+                        }
+                    }
+                    foreach (var slotContent in cn.DefaultSlotContent)
+                        CollectBindingsRecursive(new List<UIXNode> { slotContent }, bindings);
+                    foreach (var kv in cn.Slots)
+                        CollectBindingsRecursive(kv.Value, bindings);
+                }
+                else if (node is SlotContentNode scn)
+                {
+                    CollectBindingsRecursive(scn.Children, bindings);
+                }
+                else if (node is ConditionalNode condNode)
+                {
+                    CollectBindingsRecursive(condNode.Children, bindings);
+                }
+                else if (node is ForeachNode feNode)
+                {
+                    CollectBindingsRecursive(feNode.Children, bindings);
+                }
+            }
         }
 
         public static UIXStyleSheet CompileUss(string path, string uss)

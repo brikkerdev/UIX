@@ -1,0 +1,23 @@
+<component name="UIXModal">
+    <props>
+        <prop name="title" type="string" default="" />
+        <prop name="onClose" type="event" />
+    </props>
+    <template>
+        <stack class="uix-modal">
+            <button class="uix-modal-overlay" onClick="{onClose}" />
+            <column class="uix-modal-content">
+                <row class="uix-modal-header">
+                    <text class="uix-modal-title" text="{title}" />
+                    <slot name="header" />
+                </row>
+                <column class="uix-modal-body">
+                    <slot />
+                </column>
+                <row class="uix-modal-footer">
+                    <slot name="footer" />
+                </row>
+            </column>
+        </stack>
+    </template>
+</component>

@@ -10,6 +10,7 @@ namespace UIX.Core
         public UIX.Templates.UIXTheme DefaultTheme;
         public UIX.Templates.UIXTheme[] AvailableThemes;
         public Canvas TargetCanvas;
+        public RectTransform OverlayContainer;
         public TransitionType DefaultTransition = TransitionType.Fade;
         public float DefaultTransitionDuration = 0.3f;
         public bool EnableHotReload;

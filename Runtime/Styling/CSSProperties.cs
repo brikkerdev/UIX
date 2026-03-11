@@ -14,6 +14,7 @@ namespace UIX.Styling
             "gap", "align-items", "justify-content", "flex-direction", "overflow",
             "background-color", "background-image", "background-size", "opacity",
             "border-radius", "border", "border-color", "border-width", "tint",
+            "material", "box-shadow",
             "scale", "rotation",
             "font-family", "font-size", "font-weight", "font-style", "color",
             "text-align", "text-overflow", "line-height", "letter-spacing", "white-space",

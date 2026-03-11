@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcec11ccad78e00488c26d196427dd3a, type: 3}
+  m_Name: UIXButton_StyleSheet
+  m_EditorClassIdentifier: UIX.Runtime::UIX.Templates.UIXStyleSheet
+  SourcePath: Packages/com.uix.framework/Components/BuiltIn/UIXButton/UIXButton.uss
+  SourceUSS: ".uix-btn {\n    padding: var(--spacing-md);\n    background-color:
+    var(--color-primary);\n    min-height: 36;\n}\n\n.uix-btn-primary { background-color:
+    var(--color-primary); }\n.uix-btn-secondary { background-color: #6C757D; }\n.uix-btn-danger
+    { background-color: #DC3545; }\n.uix-btn-ghost { background-color: transparent;
+    }\n\n.uix-btn-sm { min-height: 28; padding: var(--spacing-xs); }\n.uix-btn-md
+    { min-height: 36; }\n.uix-btn-lg { min-height: 44; padding: var(--spacing-lg);
+    }\n\n.uix-btn-content { gap: var(--spacing-sm); align-items: center; }\n.uix-btn-text
+    { color: var(--color-on-primary, #FFFFFF); font-size: var(--font-size-md); }\n.uix-btn-icon
+    { width: 20; height: 20; }\n"
+  Rules:
+  - SelectorJson: 
+    Properties:
+    - Name: padding
+      Value: var(--spacing-md)
+    - Name: background-color
+      Value: var(--color-primary)
+    - Name: min-height
+      Value: 36
+    LineNumber: 1
+  - SelectorJson: 
+    Properties:
+    - Name: background-color
+      Value: var(--color-primary)
+    LineNumber: 7
+  - SelectorJson: 
+    Properties:
+    - Name: background-color
+      Value: '#DC3545'
+    LineNumber: 9
+  - SelectorJson: 
+    Properties:
+    - Name: min-height
+      Value: 28
+    - Name: padding
+      Value: var(--spacing-xs)
+    LineNumber: 12
+  - SelectorJson: 
+    Properties:
+    - Name: min-height
+      Value: 44
+    - Name: padding
+      Value: var(--spacing-lg)
+    LineNumber: 14
+  - SelectorJson: 
+    Properties:
+    - Name: gap
+      Value: var(--spacing-sm)
+    - Name: align-items
+      Value: center
+    LineNumber: 16
+  - SelectorJson: 
+    Properties:
+    - Name: width
+      Value: 20
+    - Name: height
+      Value: 20
+    LineNumber: 18
+  Variables: []
