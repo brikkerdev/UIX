@@ -44,7 +44,6 @@ namespace UIX.Parsing
                 {
                     var block = CollectBlock(lines, ref i);
                     ParseRootVariables(block, result.Variables, lineNum);
-                    i++;
                     continue;
                 }
 
@@ -151,6 +150,7 @@ namespace UIX.Parsing
                 if (main[i] == '.')
                 {
                     var start = i + 1;
+                    i++;
                     while (i < main.Length && (char.IsLetterOrDigit(main[i]) || main[i] == '-' || main[i] == '_'))
                         i++;
                     selector.Classes.Add(main.Substring(start, i - start));
@@ -158,6 +158,7 @@ namespace UIX.Parsing
                 else if (main[i] == '#')
                 {
                     var start = i + 1;
+                    i++;
                     while (i < main.Length && (char.IsLetterOrDigit(main[i]) || main[i] == '-' || main[i] == '_'))
                         i++;
                     selector.Id = main.Substring(start, i - start);
@@ -165,6 +166,7 @@ namespace UIX.Parsing
                 else if (main[i] == ':')
                 {
                     var start = i + 1;
+                    i++;
                     while (i < main.Length && (char.IsLetterOrDigit(main[i]) || main[i] == '-' || main[i] == '_'))
                         i++;
                     selector.PseudoClasses.Add(main.Substring(start, i - start));
@@ -191,6 +193,7 @@ namespace UIX.Parsing
             var inner = ExtractBlockContent(block);
             if (string.IsNullOrEmpty(inner)) return props;
 
+            inner = StripBlockComments(inner);
             var declarations = SplitDeclarations(inner);
             foreach (var decl in declarations)
             {
@@ -199,11 +202,32 @@ namespace UIX.Parsing
                 {
                     var name = decl.Substring(0, colon).Trim();
                     var value = decl.Substring(colon + 1).Trim().TrimEnd(';');
-                    props[name] = value;
+                    if (!string.IsNullOrEmpty(name))
+                        props[name] = value;
                 }
             }
 
             return props;
+        }
+
+        private static string StripBlockComments(string s)
+        {
+            var result = "";
+            var i = 0;
+            while (i < s.Length)
+            {
+                if (i < s.Length - 1 && s[i] == '/' && s[i + 1] == '*')
+                {
+                    i += 2;
+                    while (i < s.Length - 1 && !(s[i] == '*' && s[i + 1] == '/'))
+                        i++;
+                    if (i < s.Length - 1) i += 2;
+                    continue;
+                }
+                result += s[i];
+                i++;
+            }
+            return result;
         }
 
         private static string ExtractBlockContent(string block)

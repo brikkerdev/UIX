@@ -35,14 +35,28 @@ namespace UIX.Editor.UACF.Tools
                 File.WriteAllText(Path.Combine(projectRoot, vmPath), $"using UIX.Binding;\n\npublic class {name}ViewModel : ViewModel {{ }}\n");
 
                 AssetDatabase.Refresh();
-                UIXCompiler.CompileAsset(xmlPath);
+                var xmlContent = File.ReadAllText(Path.Combine(projectRoot, xmlPath));
+                var template = UIXCompiler.CompileXml(xmlPath, xmlContent);
                 UIXCompiler.CompileAsset(ussPath);
+
+                var prefabPath = (string)null;
+                if (template != null)
+                {
+                    prefabPath = UIX.Editor.Pipeline.UIXPrefabGenerator.SaveAsPrefab(template);
+                    if (!string.IsNullOrEmpty(template.ViewModelType))
+                    {
+                        var bindingsPath = Path.Combine(projectRoot, "Assets/UI/_Generated/Screens", name + "_Bindings.generated.cs");
+                        UIX.Editor.Pipeline.UIXBindingCodeGen.Generate(name, template.ViewModelType, bindingsPath);
+                    }
+                }
+                AssetDatabase.Refresh();
 
                 return UacfResponse.Success(new
                 {
                     screen_name = name,
                     created_files = new[] { xmlPath, ussPath, vmPath },
-                    generated_files = new[] { $"Assets/UI/_Generated/Screens/{name}.prefab" },
+                    generated_prefab = prefabPath ?? $"Assets/UI/_Generated/Screens/{name}.prefab",
+                    generated_files = prefabPath != null ? new[] { prefabPath } : new string[0],
                     validation_warnings = new string[0]
                 }, 0);
             });

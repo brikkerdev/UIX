@@ -8,6 +8,9 @@ namespace UIX.Navigation
     /// </summary>
     public class UIXNavigator
     {
+        public static TransitionType DefaultTransition { get; set; } = TransitionType.Fade;
+        public static float DefaultTransitionDuration { get; set; } = 0.3f;
+
         private readonly ScreenStack _stack = new ScreenStack();
         private readonly ModalManager _modals = new ModalManager();
 

@@ -35,15 +35,20 @@ namespace UIX.Editor.UACF.Tools
                     File.WriteAllText(ussFullPath, stylesUss);
 
                 AssetDatabase.Refresh();
-                UIXCompiler.CompileAsset(xmlPath);
+                var xmlContent = File.ReadAllText(fullPath);
+                var template = UIXCompiler.CompileXml(xmlPath, xmlContent);
                 UIXCompiler.CompileAsset(ussPath);
+
+                var prefabPath = (string)null;
+                if (template != null)
+                    prefabPath = UIXPrefabGenerator.SaveAsPrefab(template);
+                AssetDatabase.Refresh();
 
                 return UacfResponse.Success(new
                 {
                     success = true,
                     updated_files = new[] { xmlPath },
-                    regenerated_prefabs = new string[0],
-                    affected_screens = new string[0],
+                    regenerated_prefab = prefabPath,
                     validation_warnings = new string[0]
                 }, 0);
             });

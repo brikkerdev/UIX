@@ -3,6 +3,8 @@
     "rootNamespace": "UIX",
     "references": [
         "UIX.Runtime",
+        "UIX.Editor",
+        "Unity.TextMeshPro",
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner"
     ],

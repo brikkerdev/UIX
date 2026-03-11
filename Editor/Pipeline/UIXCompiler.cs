@@ -26,8 +26,17 @@ namespace UIX.Editor.Pipeline
             }
             else if (ext == ".uss")
             {
-                CompileUss(assetPath, content);
+                if (IsThemePath(assetPath))
+                    CompileTheme(assetPath, content);
+                else
+                    CompileUss(assetPath, content);
             }
+        }
+
+        public static bool IsThemePath(string path)
+        {
+            var normalized = path.Replace("\\", "/").ToLowerInvariant();
+            return normalized.Contains("/themes/") || normalized.EndsWith("/theme.uss");
         }
 
         public static UIXTemplate CompileXml(string path, string xml)
@@ -127,6 +136,60 @@ namespace UIX.Editor.Pipeline
             AssetDatabase.SaveAssets();
 
             return styleSheet;
+        }
+
+        public static UIXTheme CompileTheme(string path, string uss)
+        {
+            var result = UIXValidation.ValidateUss(path, uss);
+            foreach (var w in result.Warnings)
+                Debug.LogWarning($"[UIX] {w.File}:{w.Line} {w.Message}");
+            if (!result.Valid)
+            {
+                foreach (var e in result.Errors)
+                    Debug.LogError($"[UIX] {e.File}: {e.Message}");
+                return null;
+            }
+
+            var parseResult = USSParser.Parse(uss, path);
+
+            var dir = Path.GetDirectoryName(path);
+            var name = Path.GetFileNameWithoutExtension(path);
+            var themeName = Path.GetFileName(dir);
+            if (string.Equals(name, "theme", StringComparison.OrdinalIgnoreCase))
+                themeName = Path.GetFileName(Path.GetDirectoryName(dir));
+            var assetPath = path.Replace("\\", "/").Replace(Path.GetFileName(path), "_Generated/" + themeName + "_Theme.asset");
+            var assetDir = Path.GetDirectoryName(assetPath);
+            if (!Directory.Exists(assetDir))
+                Directory.CreateDirectory(assetDir);
+
+            var theme = ScriptableObject.CreateInstance<UIXTheme>();
+            theme.ThemeName = themeName;
+
+            foreach (var v in parseResult.Variables)
+            {
+                theme.Variables.Add(new ThemeVariable { Name = v.Name, Value = v.Value });
+            }
+
+            foreach (var v in parseResult.Variables)
+            {
+                if (v.Value != null && (v.Value.StartsWith("\"") || v.Value.Contains("/") || v.Value.Contains(".")))
+                {
+                    var pathVal = v.Value.Trim('"');
+                    if (pathVal.Contains("/") || pathVal.EndsWith(".png") || pathVal.EndsWith(".asset"))
+                    {
+                        theme.Resources.Add(new ThemeResource
+                        {
+                            Name = v.Name,
+                            Path = pathVal
+                        });
+                    }
+                }
+            }
+
+            AssetDatabase.CreateAsset(theme, assetPath);
+            AssetDatabase.SaveAssets();
+
+            return theme;
         }
     }
 }

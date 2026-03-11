@@ -238,7 +238,19 @@ namespace UIX.Parsing
                 }
             }
 
-            return CreateNode(elementNode);
+            var result = CreateNode(elementNode);
+
+            if (elementNode.Attributes.TryGetValue("if", out var ifValue))
+            {
+                elementNode.Attributes.Remove("if");
+                return CreateNode(new ConditionalNode
+                {
+                    ConditionExpression = ifValue?.Trim(' ', '{', '}'),
+                    Children = new List<UIXNode> { result }
+                });
+            }
+
+            return result;
         }
 
         private static bool IsComponentTag(string tagName)

@@ -22,6 +22,17 @@ namespace UIX.Rendering
             }
         }
 
+        public static void ApplyToRawImage(RawImage rawImage, IReadOnlyDictionary<string, string> styles)
+        {
+            if (styles == null || rawImage == null) return;
+
+            if (styles.TryGetValue("background-color", out var bg) || styles.TryGetValue("tint", out bg))
+            {
+                if (ColorParser.TryParse(bg, out var c))
+                    rawImage.color = c;
+            }
+        }
+
         public static void ApplyToText(TMP_Text text, IReadOnlyDictionary<string, string> styles)
         {
             if (styles == null || text == null) return;

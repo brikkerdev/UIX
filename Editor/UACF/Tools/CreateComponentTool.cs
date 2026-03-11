@@ -32,14 +32,20 @@ namespace UIX.Editor.UACF.Tools
                 File.WriteAllText(Path.Combine(Path.GetDirectoryName(Application.dataPath), ussPath), stylesUss);
 
                 AssetDatabase.Refresh();
-                UIXCompiler.CompileAsset(xmlPath);
+                var xmlContent = File.ReadAllText(Path.Combine(Path.GetDirectoryName(Application.dataPath), xmlPath));
+                var template = UIXCompiler.CompileXml(xmlPath, xmlContent);
                 UIXCompiler.CompileAsset(ussPath);
+
+                var prefabPath = (string)null;
+                if (template != null)
+                    prefabPath = UIX.Editor.Pipeline.UIXPrefabGenerator.SaveAsPrefab(template);
+                AssetDatabase.Refresh();
 
                 return UacfResponse.Success(new
                 {
                     component_name = name,
                     created_files = new[] { xmlPath, ussPath },
-                    generated_prefab = $"Assets/UI/_Generated/Components/{name}.prefab",
+                    generated_prefab = prefabPath ?? $"Assets/UI/_Generated/Components/{name}.prefab",
                     validation_warnings = new string[0]
                 }, 0);
             });

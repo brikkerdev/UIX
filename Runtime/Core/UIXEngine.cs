@@ -16,6 +16,7 @@ namespace UIX.Core
         private static UIXNavigator _navigator;
         private static UIXThemeManager _themes;
         private static ComponentRegistry _registry;
+        private static ComponentResolver _componentResolver;
         private static UIXRenderer _renderer;
         private static VariableResolver _variableResolver;
         private static StyleResolver _styleResolver;
@@ -23,6 +24,7 @@ namespace UIX.Core
         public static UIXNavigator Navigator => _navigator;
         public static UIXThemeManager Themes => _themes;
         public static ComponentRegistry Registry => _registry;
+        public static ComponentResolver ComponentResolver => _componentResolver;
         public static UIXRenderer Renderer => _renderer;
 
         public static void Initialize(UIXConfiguration config)
@@ -33,7 +35,8 @@ namespace UIX.Core
             _themes = new UIXThemeManager(_variableResolver);
             _navigator = new UIXNavigator();
             _registry = config?.ComponentRegistry;
-            _renderer = new UIXRenderer(_styleResolver, _variableResolver);
+            _componentResolver = _registry != null ? new ComponentResolver(_registry) : null;
+            _renderer = new UIXRenderer(_styleResolver, _variableResolver, _componentResolver);
 
             if (config?.DefaultTheme != null)
                 _themes.SetTheme(config.DefaultTheme);

@@ -29,9 +29,25 @@ namespace UIX.Editor.UACF.Tools
                     File.WriteAllText(fullPath, templateXml);
 
                 AssetDatabase.Refresh();
-                UIXCompiler.CompileAsset(xmlPath);
+                var xmlContent = File.ReadAllText(fullPath);
+                var template = UIXCompiler.CompileXml(xmlPath, xmlContent);
+                UIXCompiler.CompileAsset($"Assets/UI/Screens/{name}/{name}.uss");
 
-                return UacfResponse.Success(new { success = true, updated_files = new[] { xmlPath } }, 0);
+                var prefabPath = (string)null;
+                if (template != null)
+                {
+                    prefabPath = UIXPrefabGenerator.SaveAsPrefab(template);
+                    if (!string.IsNullOrEmpty(template.ViewModelType))
+                    {
+                        var bindingsPath = Path.Combine(Path.GetDirectoryName(Application.dataPath), "Assets/UI/_Generated/Screens", name + "_Bindings.generated.cs");
+                        var bindingsDir = Path.GetDirectoryName(bindingsPath);
+                        if (!Directory.Exists(bindingsDir)) Directory.CreateDirectory(bindingsDir);
+                        UIXBindingCodeGen.Generate(name, template.ViewModelType, bindingsPath);
+                    }
+                }
+                AssetDatabase.Refresh();
+
+                return UacfResponse.Success(new { success = true, updated_files = new[] { xmlPath }, regenerated_prefab = prefabPath }, 0);
             });
         }
     }
